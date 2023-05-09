@@ -25,15 +25,17 @@ print(data.groupby('main_category')['no_of_ratings'].mean())
 # Compute total sales for each main category and sub-category
 total_sales = data.groupby(['main_category', 'sub_category'])[['discount_price']].sum()
 
+
 # Compute average rating and number of ratings for each main category and sub-category
 avg_ratings = data.groupby(['main_category', 'sub_category'])[['ratings', 'no_of_ratings']].mean()
 
 # Compute average discount percentage for each main category and sub-category
-avg_discount = (1 - (data['discount_price'] / data['actual_price'])).groupby(
-    [data['main_category'], data['sub_category']]).mean() * 100
+avg_discount = (1 - (data['discount_price'] / data['actual_price'])).groupby([data['main_category'], data['sub_category']]).mean() * 100
+
 
 # Identify best-selling shoe in each main category and sub-category
 best_selling = data.sort_values(by='no_of_ratings', ascending=False).groupby(['main_category', 'sub_category']).first()
+
 
 # Step 5: Visualization
 # Plot total sales for each main category and sub-category
@@ -58,7 +60,8 @@ plt.title('Average Discount Percentage by Category and Sub-Category')
 plt.show()
 
 # Show the best-selling shoe in each main category and sub-category
-print(best_selling[['main_category', 'sub_category', 'discount_price']])
+print()
+print(best_selling['discount_price'])
 
 # Step 6: Conclusion
 # Summarize your findings and draw conclusions based on your analysis
