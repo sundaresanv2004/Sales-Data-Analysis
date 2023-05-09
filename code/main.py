@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = pd.read_csv('Shoes.csv')
+data = pd.read_csv('Updated_Shoes.csv')
 
 # Step 2: Data cleaning
 # Check for missing values
