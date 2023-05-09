@@ -3,26 +3,31 @@ import matplotlib.pyplot as plt
 
 data = pd.read_csv('Updated_Shoes.csv')
 
-# Step 2: Data cleaning
+# Filtering columns
+df = pd.DataFrame(data[['name', 'main_category', 'sub_category', 'ratings', 'no_of_ratings', 'discount_price', 'actual_price']])
+
 # Check for missing values
-print(data.isnull().sum())
+# print(df.isnull().sum())
 
 # Drop duplicates
-data.drop_duplicates(inplace=True)
+df.drop_duplicates(inplace=True)
+df.dropna(inplace=True)
 
 # Convert data types if necessary
-data['discount_price'] = data['discount_price'].astype(float)
-data['actual_price'] = data['actual_price'].astype(float)
+df['discount_price'] = df['discount_price'].astype(float)
+df['actual_price'] = df['actual_price'].astype(float)
 
-# Step 3: Data exploration
 # Examine the distributions of the variables
-print(data.describe())
+print()
+# print(df.describe())
 
 # Identify patterns or trends
-print(data.groupby('main_category')['no_of_ratings'].mean())
+a = df.groupby(['main_category', 'sub_category']).head()
+print(a.to_string())
 
-# Step 4: Sales analysis
 # Compute total sales for each main category and sub-category
+total_sale = df.groupby(['main_category', 'sub_category'])[['discount_price']].sum()
+# print(total_sale)
 total_sales = data.groupby(['main_category', 'sub_category'])[['discount_price']].sum()
 
 
@@ -39,29 +44,32 @@ best_selling = data.sort_values(by='no_of_ratings', ascending=False).groupby(['m
 
 # Step 5: Visualization
 # Plot total sales for each main category and sub-category
-total_sales.plot(kind='bar')
+# print(total_sales)
+data.plot(kind='bar')
 plt.xlabel('Category')
 plt.ylabel('Total Sales')
 plt.title('Total Sales by Category and Sub-Category')
 plt.show()
 
 # Create a scatterplot of average rating and number of ratings for each main category and sub-category
-avg_ratings.plot(kind='scatter', x='ratings', y='no_of_ratings')
-plt.xlabel('Average Rating')
-plt.ylabel('Number of Ratings')
-plt.title('Average Rating and Number of Ratings by Category and Sub-Category')
-plt.show()
-
-# Plot average discount percentage for each main category and sub-category
-avg_discount.plot(kind='bar')
-plt.xlabel('Category')
-plt.ylabel('Average Discount Percentage')
-plt.title('Average Discount Percentage by Category and Sub-Category')
-plt.show()
-
-# Show the best-selling shoe in each main category and sub-category
-print()
-print(best_selling['discount_price'])
-
-# Step 6: Conclusion
-# Summarize your findings and draw conclusions based on your analysis
+#  print(avg_ratings)
+#  data.plot(kind='scatter', x='ratings', y='no_of_ratings')
+#  plt.xlabel('Average Rating')
+#  plt.ylabel('Number of Ratings')
+#  plt.title('Average Rating and Number of Ratings by Category and Sub-Category')
+#  plt.show()
+#
+#  # Plot average discount percentage for each main category and sub-category
+#  avg_discount.plot(kind='bar')
+#  plt.xlabel('Category')
+#  plt.ylabel('Average Discount Percentage')
+#  plt.title('Average Discount Percentage by Category and Sub-Category')
+#  plt.show()
+#
+#  # Show the best-selling shoe in each main category and sub-category
+#  print()
+#  # print(best_selling['discount_price'])
+#
+#  # Step 6: Conclusion
+#  # Summarize your findings and draw conclusions based on your analysis
+#
